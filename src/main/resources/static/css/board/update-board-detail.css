@@ -1,0 +1,165 @@
+.circle-container {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    top: 150px;
+}
+
+.circle {
+    background-color: white;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid black;
+    margin-left: 15px;
+}
+
+.image-circle-container {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.arrow-container {
+    position: absolute;
+    width: 50px;
+    height: 35px;
+    top: 10px;
+    left: 15px;
+}
+
+.home-container {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    top: 10px;
+    left: 80px;
+}
+
+.dot-container {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    top: 10px;
+    right: 10px;
+}
+
+.option-container {
+    position: absolute;
+    width: 100px;
+    height: 70px;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+}
+
+.update-board-div {
+    font-size: 15px;
+    width: 100%;
+    height: 50%;
+}
+
+.delete-board-div {
+    font-size: 15px;
+    width: 100%;
+    height: 50%;
+}
+
+.image-container {
+    position: relative;
+}
+
+.writer-container {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.profile-container {
+    float: left;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 15px;
+}
+
+.nickname-container {
+    float: left;
+    margin-left: 15px;
+}
+
+.nickname-text{
+    font-size: 30px;
+}
+
+.board-text-bold {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.board-text {
+    font-size: 20px;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.stick {
+    color: gray;
+    font-size: 35px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.reply-list {
+    background-color: #FFA500;
+    color: white;
+    font-size: 20px;
+    border-radius: 10%;
+    width: 100px;
+    height: 35px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.reply-add {
+    background-color: #FFA500;
+    color: white;
+    font-size: 20px;
+    border-radius: 10%;
+    width: 100px;
+    height: 35px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.select-board-status {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.none {
+    display: none;
+}
+
+.price-text {
+    margin-left: 20px;
+}

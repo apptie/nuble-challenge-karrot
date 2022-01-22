@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>게시글 등록</title>
+    <link th:href="@{/css/board/add-board-form.css}" rel="stylesheet" />
+    <script type="text/javascript">
+        let images = [];
+        let count = 0;
+
+        function hasClass(elem, className) {
+            return elem.className.split(' ').indexOf(className) > -1;
+        }
+
+        function getIndex(elem) {
+            let i = 0;
+            while ((elem = elem.previousSibling) != null) {
+                if (elem.className === undefined) {
+                    continue ;
+                }
+                if (elem.className.indexOf('file-thumbnail') != -1) {
+                    i++;
+                }
+            }
+            return i;
+        }
+
+        window.onload = function() {
+            document.querySelector(".file-select").addEventListener("click", function() {
+                if (count == 4) {
+                    alert('0 ~ 4장의 사진을 추가해주세요.')
+                    return ;
+                }
+               document.querySelector(".images").click();
+            });
+
+            document.querySelector(".images").addEventListener("change", function(e) {
+
+                let file = document.querySelector(".images");
+
+                let filename = file.files[0].name;
+                let idxDot = filename.lastIndexOf(".") + 1;
+                let extFile = filename.substr(idxDot, filename.length).toLowerCase();
+
+                if (!(extFile=="jpg" || extFile=="jpeg" || extFile=="png")) {
+                    file.value = '';
+                    alert("이미지 파일만 올려주세요.");
+                    return ;
+                }
+
+                let fileData = new FormData();
+                fileData.append("image", file.files[0]);
+
+                let xml = new XMLHttpRequest();
+                xml.open("POST", "/images/upload", true);
+                xml.onload = function(e) {
+                    if (xml.status == 200) {
+                        let image = xml.responseText;
+                        let element = document.createElement("div");
+                        element.className = "file-inner-container file-thumbnail";
+                        let inner = '<img class="thumbnail" src="/images/' + image + '/image" width="60px" height="60px">';
+                        element.innerHTML = inner;
+
+                        document.querySelector(".file-outer-container").appendChild(element);
+                        images.push(image);
+                        file.value = '';
+                        count++;
+
+                        let spanCount = document.querySelector('.file-count-span');
+                        spanCount.innerText = count;
+                    }
+                    else {
+                        alert("에러 발생");
+                    }
+                }
+                xml.send(fileData);
+            });
+
+            document.addEventListener('click', function(e) {
+                let spanCount = document.querySelector('.file-count-span');
+                if (hasClass(e.target, 'file-thumbnail')) {
+                    let idx = getIndex(e.target);
+                    images.splice(idx, 1);
+                    e.target.remove();
+                    count--;
+                    spanCount.innerText = count;
+                }
+                if (hasClass(e.target, 'thumbnail')) {
+                    let div = e.target.parentNode;
+                    let idx = getIndex(div);
+                    images.splice(idx, 1);
+                    div.remove();
+                    count--;
+                    spanCount.innerText = count;
+                }
+            }, false);
+
+            document.querySelector(".submit-text").addEventListener("click", function() {
+                let categoryValue = document.getElementById('category').value;
+
+                let title = document.getElementById('title');
+                let titleValue = title.value;
+
+                let content = document.getElementById('content');
+                let contentValue = content.value;
+
+                if (categoryValue === 'N' || titleValue === '' || contentValue === '') {
+                    return ;
+                }
+
+                let form = document.querySelector('.board-form');
+                let input = document.createElement('input');
+
+                input.type = 'hidden';
+                input.name = 'images';
+                input.value = images;
+                form.appendChild(input);
+                form.submit();
+            });
+
+            document.querySelector(".image-title").addEventListener("click", function() {
+               location.href = "/";
+            });
+
+            document.querySelector('.category-div').addEventListener('click', function() {
+               document.querySelector('.category-background').className = 'category-background';
+            });
+
+            let elements = document.getElementsByClassName('category-inner-box');
+
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].addEventListener('click', function() {
+                    document.querySelector('.category-background').className = 'category-background none';
+                    let text = this.querySelector('.category-value-text').innerText;
+                    document.querySelector('.category-name').innerText = text;
+                    document.querySelector('.category').value = this.querySelector('.category-hidden-value').value;
+                });
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="image-title">
+            <img src="/image/left-arrow.png" width="auto" height="70px">
+        </div>
+        <div class="page-title">중고거래 글쓰기</div>
+        <div class="submit-text">완료</div>
+    </div>
+    <hr>
+    <div class="main-container">
+        <input name="image" type="file" class="form-control images" accept="image/png, image/jpeg, image/jpg">
+        <div class="label">
+            <span>이미지</span>
+        </div>
+        <div class="file-outer-container">
+
+            <div class="file-inner-container file-select">
+                <img class="file-img" src="/image/camera.png" width="30px" height="30px">
+                <br>
+                <span class="file-count-span">0</span><span>/4</span>
+            </div>
+        </div>
+
+        <form class="board-form" th:action th:object="${addBoardForm}" method="post" enctype="multipart/form-data">
+            <div class="form-margin">
+                <hr>
+            </div>
+            <input type="text" th:field="*{title}" th:errorclass="input-error" class="form-control" placeholder="제목">
+            <div class="field-error" th:errors="*{title}">
+                제목 오류
+            </div>
+
+            <hr>
+
+            <div class="category-div">
+                <span class="category-name">카테고리</span>
+                <img class="category-name-img" src="/image/down-arrow.png" width="15px" height="15px">
+            </div>
+
+            <div class="category-background none">
+                <div class="category-box">
+                    <th:block th:each="category : ${T(numble.challenge.karrot.board.utils.Category).values()}">
+                        <div class="category-inner-box">
+                            <span class="category-value-text" th:text="${category.value}"></span>
+                            <input type="hidden" class="category-hidden-value" th:value="${category}">
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+            <div class="field-error" th:errors="*{category}">
+                카테고리 오류
+            </div>
+
+            <input type="hidden" th:field="*{category}" class="category" value="N">
+
+            <hr>
+            <input type="text" th:field="*{price}" th:errorclass="input-error" class="form-control" placeholder="가격">
+            <div class="field-error" th:errors="*{price}">
+                가격 오류
+            </div>
+
+            <hr>
+            <input type="textarea" th:field="*{content}" id="content" name="content" th:errorclass="input-error" class="form-control"
+                   placeholder="게시글 내용을 작성해주세요.">
+            <div class="field-error" th:errors="*{content}">
+                내용 오류
+            </div>
+        </form>
+    </div>
+</body>
+</html>

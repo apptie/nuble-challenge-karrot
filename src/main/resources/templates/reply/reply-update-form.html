@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>댓글 작성</title>
+    <link th:href="@{/css/reply/reply-form.css}" rel="stylesheet" />
+
+    <script th:inline="javascript">
+        let boardId = /*[[ ${board.id} ]]*/
+
+        window.onload = function() {
+          document.querySelector('.image-title').addEventListener('click', function() {
+              location.href = '/boards/' + boardId + '/replies';
+          });
+
+          document.querySelector('.reply-add-div').addEventListener('click', function() {
+              document.querySelector('.reply-form').submit();
+          });
+        };
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="image-title">
+            <img src="/image/left-arrow.png" width="auto" height="70px">
+        </div>
+        <div class="page-title">댓글 남기기</div>
+    </div>
+    <br><hr>
+    <form class="reply-form" th:object="${replyForm}" th:action method="post">
+        <input type="textarea" th:field="*{content}" th:value="${replyForm?.content}" id="content" name="content" th:errorclass="input-error" class="form-control content"
+               placeholder="댓글을 남겨주세요.">
+        <div class="field-error" th:errors="*{content}">
+            내용 오류
+        </div>
+    </form>
+
+    <div class="reply-add-div">
+        작성완료
+    </div>
+</body>
+</html>

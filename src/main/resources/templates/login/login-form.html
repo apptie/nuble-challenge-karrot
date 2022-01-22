@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>로그인</title>
+    <link th:href="@{/css/login/login-form.css}" rel="stylesheet" />
+    <script th:inline="javascript">
+        window.onload = function() {
+            let error = /*[[ ${error} ]]*/;
+            if (error !== null) {
+                alert("이메일(ID)나 비밀번호(PW)를 다시 확인해주세요.");
+            }
+        };
+    </script>
+
+</head>
+<body>
+    <div class="main-container">
+        <div>
+            <span class="login-text">로그인</span>
+        </div>
+        <form th:action th:object="${loginForm}" method="post">
+            <div class="email-container">
+                <span class="label-1">이메일(ID)</span>
+                <input type="email" th:field="*{email}" th:errorclass="input-error" class="form-control">
+            </div>
+            <div class="field-error email-error" th:errors="*{email}">
+                이메일(ID) 오류
+            </div>
+
+            <div class="password-container">
+                <span class="label-2">비밀번호(PW)</span>
+                <input type="password" th:field="*{password}" th:errorclass="input-error" class="form-control">
+                <div class="field-error password-error" th:errors="*{password}">
+                    비밀번호(PW) 오류
+                </div>
+            </div>
+            <input class="submit-button" type="submit" value="로그인"/>
+        </form>
+
+    </div>
+</body>
+</html>

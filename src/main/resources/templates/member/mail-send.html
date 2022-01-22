@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>인증메일 전송</title>
+    <style>
+        .display-none {
+            display: none;
+        }
+
+        .text-container {
+            margin-top: 15px;
+            font-size: 20px;
+        }
+
+        .div-login-button {
+            color: white;
+            background-color: #FFA500;
+            margin-top: 250px;
+            width: 100%;
+            height: 40px;
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .loading-box .dim {
+            position:fixed;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,.7);
+        }
+
+        .loading-box .circle {
+            position:fixed;
+            left:50%;
+            top:50%;
+            transform:translate(-50%, -50%);
+            width:40px;
+            height:40px;
+            border:10px solid #fff;
+            border-top:10px solid red;
+            border-radius:50em;
+
+            animation-name:spinCircle;
+            animation-duration:.8s;
+            animation-iteration-count:infinite;
+        }
+
+        @keyframes spinCircle {
+            from {
+                transform:translate(-50%, -50%) rotate(0);
+            }
+            to {
+                transform:translate(-50%, -50%) rotate(360deg);
+            }
+        }
+    </style>
+    <script th:inline="javascript">
+        window.onload = function() {
+            let email = /*[[ ${email} ]]*/;
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/members/send-mail')
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    document.querySelector('.text-container').className = 'text-container';
+                    document.querySelector('.loading-box').className = 'loading-box display-none';
+                }
+                else {
+                    alert('error');
+                }
+            }
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                email : email,
+            }));
+
+            document.querySelector('.div-login-button').addEventListener('click', function() {
+                location.href = '/login';
+            });
+        };
+    </script>
+</head>
+<body>
+    <div class="text-container display-none">
+        <span>입력하신 </span><span th:text="${email}"></span><span>으로</span>
+        <br>
+        <span>인증메일을 전송했습니다.</span>
+        <br>
+        <span>메일을 인증하고</span>
+        <br>
+        <span>Karrot 마켓을 시작해보세요</span>
+    </div>
+
+    <div class="div-login-button">
+        로그인 하러가기
+    </div>
+
+    <div class="loading-box">
+        <div class="dim"></div>
+        <div class="circle"></div>
+    </div>
+</body>
+</html>

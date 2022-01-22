@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>게시글 목록</title>
+    <link th:href="@{/css/member/my-board-list.css}" rel="stylesheet" />
+    <script th:inline="javascript">
+        function getIndex(elem, name) {
+            let i = 0;
+            while ((elem = elem.previousSibling) != null) {
+                if (elem.className === undefined) {
+                    continue ;
+                }
+                if (elem.className.indexOf(name) != -1) {
+                    i++;
+                }
+            }
+            return i;
+        }
+
+        window.onload = function() {
+            let elements = document.getElementsByClassName("board-container");
+
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].addEventListener("click", function() {
+                    let boardId = this.querySelector(".board-id").value;
+                    location.href = '/boards/' + boardId + '/my-detail';
+                }, false);
+            };
+
+            let done = document.getElementsByClassName('change-done-status');
+
+            for (let i = 0; i < done.length; i++) {
+                done[i].addEventListener('click', function() {
+                    let idx = getIndex(this.parentElement, 'change-status-div');
+                    let boardId = this.parentElement.parentElement.getElementsByClassName('board-container')[idx].querySelector('.board-id').value;
+
+                    let xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/boards/status');
+                    xhr.onload = function(e) {
+                        if (xhr.status == 200) {
+                            document.querySelector('.sell-select').click();
+                        }
+                        else {
+                            alert('error');
+                        }
+                    };
+
+                    let writer = /*[[ ${writer} ]]*/;
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify({
+                        boardId: boardId,
+                        type: '거래완료',
+                    }));
+                });
+            };
+
+            let reserve = document.getElementsByClassName('change-reserve-status');
+
+            for (let i = 0; i < reserve.length; i++) {
+                reserve[i].addEventListener('click', function() {
+                    let idx = getIndex(this.parentElement, 'change-status-div');
+                    let boardId = this.parentElement.parentElement.getElementsByClassName('board-container')[idx].querySelector('.board-id').value;
+
+                    let xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/boards/status');
+                    xhr.onload = function(e) {
+                        if (xhr.status == 200) {
+                            document.querySelector('.sell-select').click();
+                        }
+                        else {
+                            alert('error');
+                        }
+                    };
+
+                    let writer = /*[[ ${writer} ]]*/;
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify({
+                        boardId: boardId,
+                        type: '예약중',
+                    }));
+                });
+            };
+
+            document.querySelector('.sell-select').addEventListener('click', function() {
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', '/boards/sell');
+                xhr.onload = function(e) {
+                    if (xhr.status == 200) {
+                        let res = xhr.responseText;
+                        let list = JSON.parse(res);
+                        let board = document.querySelector('.outer-board-container');
+
+                        while (board.hasChildNodes()) {
+                            board.removeChild(board.firstChild);
+                        }
+
+                        let newBoardList = '';
+
+                        for (let i = 0; i < list.length; i++) {
+                            newBoardList += '<div class="board-container">';
+                            newBoardList += '<div class="img-container">';
+                            newBoardList += '<img src="/images/' + list[i].image + '/image" width="100%" height="100%" onerror="this.onerror=null; this.src=\'/image/no-image.png\';"/>';
+                            newBoardList += '</div>';
+                            newBoardList += '<div class="text-container">';
+                            newBoardList += '<span class="board-text title">' + list[i].title + '</span>';
+                            newBoardList += '<br>';
+                            newBoardList += '<span class="board-text place">' + list[i].place + '</span>';
+                            newBoardList += '<br>';
+                            newBoardList += '<span class="board-text price">' + list[i].price + '</span>';
+                            newBoardList += '<br>';
+                            newBoardList += '<div class="reply-img-container">';
+                            newBoardList += '<img src="/image/reply.png" width="20px" height="20px">';
+                            newBoardList += '</div>';
+                            newBoardList += '<div class="reply-text-container">';
+                            newBoardList += '<span class="board-sub-text">' + list[i].replyCount + '</span>';
+                            newBoardList += '</div>';
+                            newBoardList += '<div class="interest-img-container">';
+                            newBoardList += '<img src="/image/interest.png" width="20px" height="20px">';
+                            newBoardList += '</div>';
+                            newBoardList += '<div class="interest-text-container">';
+                            newBoardList += '<span class="board-sub-text">' + list[i].interestCount + '</span>';
+                            newBoardList += '</div>';
+                            newBoardList += '<input type="hidden" class="board-id" value="' + list[i].id + '"/>';
+                            newBoardList += '</div>';
+                            newBoardList += '</div>';
+
+                            newBoardList += '<div class="change-status-div">';
+                            newBoardList += '<div class="change-reserve-status">';
+                            newBoardList += '예약중으로 변경';
+                            newBoardList += '</div>';
+                            newBoardList += '<div class="change-done-status">';
+                            newBoardList += '거래완료로 변경';
+                            newBoardList += '</div>';
+                            newBoardList += '</div>';
+                        }
+
+                        board.innerHTML = newBoardList;
+
+                        document.querySelector('.sell-select').className = 'select-div sell-select';
+                        document.querySelector('.done-select').className = 'non-select-div done-select';
+
+                        let elements = document.getElementsByClassName("board-container");
+
+                        for (let i = 0; i < elements.length; i++) {
+                            elements[i].addEventListener("click", function() {
+                                let boardId = this.querySelector(".board-id").value;
+                                location.href = '/boards/' + boardId + '/my-detail';
+                            }, false);
+                        };
+
+                        let done = document.getElementsByClassName('change-done-status');
+
+                        for (let i = 0; i < done.length; i++) {
+                            done[i].addEventListener('click', function() {
+                                let idx = getIndex(this.parentElement, 'change-status-div');
+                                let boardId = this.parentElement.parentElement.getElementsByClassName('board-container')[idx].querySelector('.board-id').value;
+
+                                let xhr = new XMLHttpRequest();
+                                xhr.open('POST', '/boards/status');
+                                xhr.onload = function(e) {
+                                    if (xhr.status == 200) {
+                                        document.querySelector('.sell-select').click();
+                                    }
+                                    else {
+                                        alert('error');
+                                    }
+                                };
+
+                                let writer = /*[[ ${writer} ]]*/;
+                                xhr.setRequestHeader('Content-Type', 'application/json');
+                                xhr.send(JSON.stringify({
+                                    boardId: boardId,
+                                    type: '거래완료',
+                                }));
+                            });
+                        };
+
+                        let reserve = document.getElementsByClassName('change-reserve-status');
+
+                        for (let i = 0; i < reserve.length; i++) {
+                            reserve[i].addEventListener('click', function() {
+                                let idx = getIndex(this.parentElement, 'change-status-div');
+                                let boardId = this.parentElement.parentElement.getElementsByClassName('board-container')[idx].querySelector('.board-id').value;
+
+                                let xhr = new XMLHttpRequest();
+                                xhr.open('POST', '/boards/status');
+                                xhr.onload = function(e) {
+                                    if (xhr.status == 200) {
+                                        document.querySelector('.sell-select').click();
+                                    }
+                                    else {
+                                        alert('error');
+                                    }
+                                };
+
+                                let writer = /*[[ ${writer} ]]*/;
+                                xhr.setRequestHeader('Content-Type', 'application/json');
+                                xhr.send(JSON.stringify({
+                                    boardId: boardId,
+                                    type: '예약중',
+                                }));
+                            });
+                        };
+
+                    } else {
+
+                    }
+                }
+                let memberId = /*[[ ${memberId} ]]*/;
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({
+                    memberId : memberId,
+                }));
+            });
+
+            document.querySelector('.done-select').addEventListener('click', function() {
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', '/boards/done');
+                xhr.onload = function(e) {
+                    if (xhr.status == 200) {
+                        let res = xhr.responseText;
+                        let list = JSON.parse(res);
+                        let board = document.querySelector('.outer-board-container');
+
+                        while (board.hasChildNodes()) {
+                            board.removeChild(board.firstChild);
+                        }
+
+                        let newBoardList = '';
+
+                        for (let i = 0; i < list.length; i++) {
+                            newBoardList += '<div class="board-container">';
+                            newBoardList += '<div class="img-container">';
+                            newBoardList += '<img src="/images/' + list[i].image + '/image" width="100%" height="100%" onerror="this.onerror=null; this.src=\'/image/no-image.png\';"/>';
+                            newBoardList += '</div>';
+                            newBoardList += '<div class="text-container">';
+                            newBoardList += '<span class="board-text title">' + list[i].title + '</span>';
+                            newBoardList += '<br>';
+                            newBoardList += '<span class="board-text place">' + list[i].place + '</span>';
+                            newBoardList += '<br>';
+
+                            if (list[i].status === '거래완료') {
+                                newBoardList += '<div class="done-box">거래완료</div>';
+                            }
+
+                            newBoardList += '<span class="board-text price">' + list[i].price + '</span>';
+
+
+                            newBoardList += '<br>';
+                            newBoardList += '<div class="reply-img-container">';
+                            newBoardList += '<img src="/image/reply.png" width="20px" height="20px">';
+                            newBoardList += '</div>';
+                            newBoardList += '<div class="reply-text-container">';
+                            newBoardList += '<span class="board-sub-text">' + list[i].replyCount + '</span>';
+                            newBoardList += '</div>';
+                            newBoardList += '<div class="interest-img-container">';
+                            newBoardList += '<img src="/image/interest.png" width="20px" height="20px">';
+                            newBoardList += '</div>';
+                            newBoardList += '<div class="interest-text-container">';
+                            newBoardList += '<span class="board-sub-text">' + list[i].interestCount + '</span>';
+                            newBoardList += '</div>';
+                            newBoardList += '<input type="hidden" class="board-id" value="' + list[i].id + '"/>';
+                            newBoardList += '</div>';
+                            newBoardList += '</div>';
+
+                            newBoardList += '<div class="change-status-div">';
+
+                            if (list[i].status === '예약중') {
+                                newBoardList += '<div class="change-done-status">';
+                                newBoardList += '거래완료로 변경';
+                                newBoardList += '</div>';
+                            }
+                            else if (list[i].status === '거래완료') {
+                                newBoardList += '<div class="change-reserve-status">';
+                                newBoardList += '예약중으로 변경';
+                                newBoardList += '</div>';
+                            }
+
+                            newBoardList += '<div class="change-sell-status">';
+                            newBoardList += '판매중으로 변경';
+                            newBoardList += '</div>';
+                            newBoardList += '</div>';
+                        }
+
+                        board.innerHTML = newBoardList;
+
+                        document.querySelector('.sell-select').className = 'non-select-div sell-select';
+                        document.querySelector('.done-select').className = 'select-div done-select';
+
+                        let elements = document.getElementsByClassName("board-container");
+
+                        for (let i = 0; i < elements.length; i++) {
+                            elements[i].addEventListener("click", function() {
+                                let boardId = this.querySelector(".board-id").value;
+                                location.href = '/boards/' + boardId + '/my-detail';
+                            }, false);
+                        };
+
+                        let sell = document.getElementsByClassName('change-sell-status');
+
+                        for (let i = 0; i < sell.length; i++) {
+                            sell[i].addEventListener('click', function() {
+                                let idx = getIndex(this.parentElement, 'change-status-div');
+                                let boardId = this.parentElement.parentElement.getElementsByClassName('board-container')[idx].querySelector('.board-id').value;
+
+                                let xhr = new XMLHttpRequest();
+                                xhr.open('POST', '/boards/status');
+                                xhr.onload = function(e) {
+                                    if (xhr.status == 200) {
+                                        document.querySelector('.done-select').click();
+                                    }
+                                    else {
+                                        alert('error');
+                                    }
+                                };
+
+                                let writer = /*[[ ${writer} ]]*/;
+                                xhr.setRequestHeader('Content-Type', 'application/json');
+                                xhr.send(JSON.stringify({
+                                    boardId: boardId,
+                                    type: '판매중',
+                                }));
+                            });
+                        };
+
+                        let reserve = document.getElementsByClassName('change-reserve-status');
+
+                        for (let i = 0; i < reserve.length; i++) {
+                            reserve[i].addEventListener('click', function() {
+                                let idx = getIndex(this.parentElement, 'change-status-div');
+                                let boardId = this.parentElement.parentElement.getElementsByClassName('board-container')[idx].querySelector('.board-id').value;
+
+                                let xhr = new XMLHttpRequest();
+                                xhr.open('POST', '/boards/status');
+                                xhr.onload = function(e) {
+                                    if (xhr.status == 200) {
+                                        document.querySelector('.done-select').click();
+                                    }
+                                    else {
+                                        alert('error');
+                                    }
+                                };
+
+                                let writer = /*[[ ${writer} ]]*/;
+                                xhr.setRequestHeader('Content-Type', 'application/json');
+                                xhr.send(JSON.stringify({
+                                    boardId: boardId,
+                                    type: '예약중',
+                                }));
+                            });
+                        };
+
+                        let done = document.getElementsByClassName('change-done-status');
+
+                        for (let i = 0; i < done.length; i++) {
+                            done[i].addEventListener('click', function() {
+                                let idx = getIndex(this.parentElement, 'change-status-div');
+                                let boardId = this.parentElement.parentElement.getElementsByClassName('board-container')[idx].querySelector('.board-id').value;
+
+                                let xhr = new XMLHttpRequest();
+                                xhr.open('POST', '/boards/status');
+                                xhr.onload = function(e) {
+                                    if (xhr.status == 200) {
+                                        document.querySelector('.done-select').click();
+                                    }
+                                    else {
+                                        alert('error');
+                                    }
+                                };
+
+                                let writer = /*[[ ${writer} ]]*/;
+                                xhr.setRequestHeader('Content-Type', 'application/json');
+                                xhr.send(JSON.stringify({
+                                    boardId: boardId,
+                                    type: '거래완료',
+                                }));
+                            });
+                        };
+
+                    } else {
+
+                    }
+                }
+                let memberId = /*[[ ${memberId} ]]*/;
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({
+                    memberId : memberId,
+                }));
+            });
+
+            document.querySelector('.image-title').addEventListener('click', function() {
+                location.href = "/members";
+            });
+        };
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="image-title">
+            <img src="/image/left-arrow.png" width="auto" height="70px">
+        </div>
+        <div class="page-title">판매내역</div>
+    </div>
+
+    <div>
+        <div class="select-div sell-select">
+            판매중
+        </div>
+        <div class="non-select-div done-select">
+            거래완료
+        </div>
+    </div>
+
+    <br>
+
+    <div class="outer-board-container" id="outer-board-container">
+        <th:block th:each="board : ${list}">
+            <div class="board-container">
+                <div class="img-container">
+                    <img th:src="|/images/${board.image}/image|" width="100%" height="100%" onerror="this.onerror=null; this.src='/image/no-image.png';"/>
+                </div>
+                <div class="text-container">
+                    <th:block th:if="${#strings.length(board.title) > 15 }">
+                        <span class="board-text title" th:text="${#strings.substring(board.title, 0, 16)}"></span>
+                    </th:block>
+                    <th:block th:unless="${#strings.length(board.title) > 15 }">
+                        <span class="board-text title" th:text="${board.title}"></span>
+                    </th:block>
+                    <br>
+                    <span class="board-text place" th:text="${board.place}"></span>
+                    <br>
+                    <th:block th:if="${board.status.name == '거래완료'}">
+                        <div class="done-box">거래완료</div>
+                    </th:block>
+                    <span class="board-text price" th:text="${board.price}"></span>
+                    <br>
+                    <div class="reply-img-container">
+                        <img src="/image/reply.png" width="20px" height="20px">
+                    </div>
+                    <div class="reply-text-container">
+                        <span class="board-sub-text" th:text="${board.replyCount}"></span>
+                    </div>
+                    <div class="interest-img-container">
+                        <img src="/image/interest.png" width="20px" height="20px">
+                    </div>
+                    <div class="interest-text-container">
+                        <span class="board-sub-text" th:text="${board.interestCount}"></span>
+                    </div>
+                    <input type="hidden" class="board-id" th:value="${board.id}"/>
+                </div>
+            </div>
+            <div class="change-status-div">
+                <div class="change-reserve-status">
+                    예약중으로 변경
+                </div>
+                <div class="change-done-status">
+                    거래완료로 변경
+                </div>
+            </div>
+        </th:block>
+    </div>
+</body>
+</html>

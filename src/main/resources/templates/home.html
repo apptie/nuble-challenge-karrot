@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>메인 페이지</title>
+    <style>
+        .main-container {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(10, minmax(100px, auto));
+            align-items: center;
+            justify-content: center;
+        }
+
+        .img-container {
+            width : 100%;
+            height : 100%;
+            grid-column-start: 2;
+            grid-column-end: 5;
+            grid-row-start: 2;
+            grid-row-end: 4;
+        }
+
+        .home-img {
+            width: 80%;
+            height: 80%;
+        }
+
+        .karrot-text {
+            font-weight: bold;
+            font-size: 25px;
+        }
+
+        .text-container-1 {
+            grid-column-start: 1;
+            grid-column-end: 6;
+            grid-row-start: 3;
+            grid-row-end: 5;
+            margin-top: 35px;
+        }
+
+        .button-container {
+            grid-column-start: 1;
+            grid-column-end: 6;
+            grid-row-start: 5;
+            grid-row-end: 6;
+            width: 100%;
+            height: 100%;
+        }
+
+        .button {
+            width: 100%;
+            height: 60%;
+            border: 0;
+            background-color: #FFA500;
+            font-size: 20px;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .login-container {
+            grid-column-start: 1;
+            grid-column-end: 6;
+            grid-row-start: 6;
+            grid-row-end: 7;
+            width: 100%;
+            height: 100%;
+        }
+
+        .login-span {
+            font-size: 20px;
+        }
+
+        .login-text {
+            color: #FFA500;
+        }
+    </style>
+
+    <script type="text/javascript">
+        window.onload = function() {
+            document.querySelector(".login-text").addEventListener("click", function() {
+                location.href = "/login";
+            });
+
+            document.querySelector(".button").addEventListener("click", function() {
+                location.href = "/members/new";
+            });
+        };
+    </script>
+</head>
+<body>
+    <div class="main-container">
+        <div class="img-container">
+            <img class="home-img" src="/image/karrot.png" alt="no image">
+        </div>
+        <div class="text-container-1">
+            <span class="karrot-text">당신 근처의 Karrot 마켓</span>
+            <br><br>
+            <span class="intro-text-1">이제 내 동내에서</span>
+            <br>
+            <span class="intro-text-2">간편하게 중고거래하자</span>
+        </div>
+        <div class="button-container">
+            <button class="button">시작하기</button>
+        </div>
+        <div class="login-container">
+            <span class="login-span">이미 계정이 있나요?</span>
+            <span class="login-span login-text">로그인</span>
+        </div>
+    </div>
+</body>
+</html>

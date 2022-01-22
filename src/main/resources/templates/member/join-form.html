@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>회원가입</title>
+    <link th:href="@{/css/member/join-form.css}" rel="stylesheet" />
+    <script type="text/javascript">
+        let ip = '';
+        function getIP(res) {
+            ip = res.ip;
+        }
+        window.onload = function() {
+            document.querySelector('.client-ip').value = ip;
+        }
+    </script>
+    <script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+</head>
+<body>
+    <div class="main-container">
+        <form th:action th:object="${joinMemberForm}" method="post">
+            <div class="label-1">
+                <span>이메일(ID)</span>
+            </div>
+            <input type="email" th:field="*{email}" th:errorclass="input-error" class="form-control">
+            <div class="field-error" th:errors="*{email}">
+                이메일(ID) 오류
+            </div>
+
+            <div>
+                <span>비밀번호(PW)</span>
+            </div>
+            <input type="password" th:field="*{password}" th:errorclass="input-error" class="form-control">
+            <div class="field-error" th:errors="*{password}">
+                비밀번호(PW) 오류
+           </div>
+
+            <div>
+                <span>이름</span>
+            </div>
+            <input type="text" th:field="*{name}" th:errorclass="input-error" class="form-control">
+            <div class="field-error" th:errors="*{name}">
+                이름 오류
+            </div>
+
+            <div>
+                <span>핸드폰번호</span>
+            </div>
+            <input type="text" th:field="*{phoneNumber}" th:errorclass="input-error" class="form-control">
+            <div class="field-error" th:errors="*{phoneNumber}">
+                핸드폰번호 오류
+            </div>
+
+            <div>
+                <span>닉네임</span>
+            </div>
+            <input type="text" th:field="*{nickname}" th:errorclass="input-error" class="form-control">
+            <div class="field-error" th:errors="*{nickname}">
+                닉네임 오류
+            </div>
+
+            <div>
+                <span>장소</span>
+            </div>
+            <input type="text" th:field="*{place}" th:errorclass="input-error" class="form-control" placeholder="시/군까지만 입력해주세요.">
+            <div class="field-error" th:errors="*{place}">
+                장소 오류
+            </div>
+            <input type="hidden" class="client-ip" name="ip" />
+            <input class="form-button" type="submit" value="가입하기"/>
+        </form>
+    </div>
+</body>
+</html>

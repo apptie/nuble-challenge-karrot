@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>게시글 상세보기 - 수정</title>
+    <link th:href="@{/css/board/update-board-detail.css}" rel="stylesheet" />
+    <script th:inline="javascript">
+
+        function getIndex(elem) {
+            let i = 0;
+            while ((elem = elem.previousSibling) != null) {
+                if (elem.className === undefined) {
+                    continue ;
+                }
+                if (elem.className.indexOf('circle') != -1) {
+                    i++;
+                }
+            }
+            return i;
+        }
+
+        window.onload = function() {
+            let elements = document.getElementsByClassName('circle');
+
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].addEventListener('click', function(e) {
+                    let index = getIndex(e.target);
+                    let imgList = /*[[ ${form.imgList} ]]*/;
+                    document.querySelector('.board-image').src = '/images/' + imgList[index] + '/image';
+                }, false);
+            };
+
+            document.querySelector('.reply-list').addEventListener('click', function() {
+                let boardId = /*[[ ${form.id} ]]*/;
+                location.href = '/boards/' + boardId + '/replies';
+            });
+
+            document.querySelector('.reply-add').addEventListener('click', function() {
+                let boardId = /*[[ ${form.id} ]]*/;
+                location.href = '/boards/' + boardId + '/replies/new';
+            });
+
+            document.querySelector('.arrow-container').addEventListener('click', function() {
+                let type = /*[[ ${type} ]]*/;
+                if (type === 'new') {
+                    location.href = '/';
+                }
+                else if (type === 'my-page') {
+                    location.href = '/members/boards';
+                }
+            });
+
+            document.querySelector('.home-container').addEventListener('click', function() {
+               location.href = '/';
+            });
+
+            document.querySelector('.select-board-status').addEventListener('change', function() {
+                let type = this.value;
+                let boardId = /*[[ ${form.id} ]]*/;
+
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', '/boards/status');
+                xhr.onload = function(e) {
+                    if (xhr.status == 200) {
+
+                    }
+                    else {
+                        alert('error');
+                    }
+                };
+
+                let writer = /*[[ ${writer} ]]*/;
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({
+                    boardId: String(boardId),
+                    type: type,
+                }));
+
+            });
+
+            document.querySelector('.dot-container').addEventListener('click', function() {
+               let option = document.querySelector('.option-container');
+               this.className = 'dot-container none';
+               option.className = 'option-container';
+            });
+
+            document.querySelector('.update-board-div').addEventListener('click', function() {
+                let boardId = /*[[ ${form.id} ]]*/;
+                location.href = '/boards/' + boardId + '/my-update';
+            });
+
+            document.querySelector('.delete-board-div').addEventListener('click', function() {
+                let xhr = new XMLHttpRequest();
+                let boardId = /*[[ ${form.id} ]]*/;
+
+                xhr.open('POST', '/boards/' + boardId + '/delete');
+                xhr.onload = function(e) {
+                    if (xhr.status == 200) {
+                        location.href = '/members/boards';
+                    }
+                    else {
+                        alert('error');
+                    }
+                }
+                xhr.send();
+            });
+        };
+    </script>
+</head>
+<body>
+    <input type="hidden" class="input-type" th:value="${type} "/>
+    <div th:if="${form.imgList.size() > 0}" class="image-circle-container">
+        <div class="image-container">
+            <img class="board-image" id="board-image" th:src="|/images/${form.imgList[0]}/image|" width="100%" height="100%">
+        </div>
+        <div class="circle-container" th:with="size = ${form.imgList.size()}">
+            <th:block  th:each="num: ${#numbers.sequence(1, size)}">
+                <div class="circle"></div>
+            </th:block>
+        </div>
+        <div class="arrow-container">
+            <img src="/image/left-arrow.png" width="100%" height="100%">
+        </div>
+        <div class="home-container">
+            <img src="/image/home.png" width="100%" height="100%">
+        </div>
+        <div class="dot-container">
+            <img src="/image/dots.png" width="100%" height="100%">
+        </div>
+        <div class="option-container none">
+            <div class="update-board-div">
+                게시글 수정
+            </div>
+            <div class="delete-board-div">
+                삭제
+            </div>
+        </div>
+    </div>
+    <th:block th:unless="${form.imgList.size() > 0}">
+        <div class="no-image-circle-container">
+            <div class="arrow-container">
+                <img src="/image/left-arrow.png" width="100%" height="100%">
+            </div>
+            <div class="home-container">
+                <img src="/image/home.png" width="100%" height="100%">
+            </div>
+            <div class="dot-container">
+                <img src="/image/dots.png" width="100%" height="100%">
+            </div>
+            <div class="option-container none">
+                <div class="update-board-div">
+                    게시글 수정
+                </div>
+                <div class="delete-board-div">
+                    삭제
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+    <br><hr>
+
+    <div class="writer-container">
+        <div class="profile-container">
+            <img th:src="|/images/${form.profile}/profile|" width="100%" height="100%" onerror="this.onerror=null; this.src='/image/no-profile.png';">
+        </div>
+        <div class="nickname-container">
+            <span class="nickname-text" th:text="${form.nickname}"></span>
+        </div>
+    </div>
+
+    <br><hr>
+
+    <div class="board-text-container">
+        <span class="board-text-bold">제목</span><span class="board-text" th:text="${form.title}"></span>
+        <span class="board-text-bold price-text">가격</span><span class="board-text" th:text="${form.price}"></span>
+        <br><br>
+        <select class="select-board-status">
+            <option th:selected="${form.status.name() == '판매중'}">판매중</option>
+            <option th:selected="${form.status.name() == '예약중'}">예약중</option>
+           <option th:selected="${form.status.name() == '거래완료'}">거래완료</option>
+        </select>
+        <span class="board-text" th:text="${form.time}"></span>
+        <br><br>
+        <span class="board-text-bold">본문</span><br><span class="board-text" th:text="${form.content}"></span>
+    </div>
+
+    <br><hr><br>
+    <div class="footer">
+        <div class="interest-button">
+            <input type="hidden" class="interest-value" th:value="${form.isInterest}">
+            <img class="interest-img" src="/image/empty-heart.png" width="35px" height="35px">
+        </div>
+        <div class="stick">
+            |
+        </div>
+        <div class="reply-image">
+            <img src="/image/reply.png" width="35px" height="35px">
+        </div>
+        <div class="reply-list">
+            댓글 보기
+        </div>
+        <div class="reply-add">
+            댓글 쓰기
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>게시글 목록</title>
+    <link th:href="@{/css/board/board-list.css}" rel="stylesheet" />
+    <script type="text/javascript">
+        window.onload = function() {
+            let elements = document.getElementsByClassName("board-container");
+
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].addEventListener("click", function() {
+                    let boardId = this.querySelector("#board-id").value;
+                    location.href = "/boards/" + boardId;
+                }, false);
+            };
+
+            document.querySelector(".add-board").addEventListener("click", function() {
+                location.href = "/boards/new";
+            });
+
+            document.querySelector(".home-container").addEventListener("click", function() {
+                location.href = "/";
+            });
+
+            document.querySelector(".my-page-container").addEventListener("click", function() {
+                location.href = "/members/";
+            });
+        };
+    </script>
+</head>
+<body>
+    <div>
+        개발자님 동네
+    </div>
+    <br><hr>
+    <div class="board-container" th:each="board : ${list}">
+        <div class="img-container">
+            <img th:src="|/images/${board.image}/image|" width="100%" height="100%" onerror="this.onerror=null; this.src='/image/no-image.png';"/>
+        </div>
+        <div class="text-container">
+            <th:block th:if="${#strings.length(board.title) > 15 }">
+                <span class="board-text title" th:text="${#strings.substring(board.title, 0, 16)}"></span>
+            </th:block>
+            <th:block th:unless="${#strings.length(board.title) > 15 }">
+                <span class="board-text title" th:text="${board.title}"></span>
+            </th:block>
+            <br>
+            <span class="board-text place" th:text="${board.place}"></span>
+            <br>
+            <th:block th:if="${board.status.name == '거래완료'}">
+                <div class="done-box">거래완료</div>
+            </th:block>
+            <span class="board-text price" th:text="${board.price}"></span>
+            <br>
+            <div class="reply-img-container">
+                <img src="/image/reply.png" width="20px" height="20px">
+            </div>
+            <div class="reply-text-container">
+                <span class="board-sub-text" th:text="${board.replyCount}"></span>
+            </div>
+            <div class="interest-img-container">
+                <img src="/image/interest.png" width="20px" height="20px">
+            </div>
+            <div class="interest-text-container">
+                <span class="board-sub-text" th:text="${board.interestCount}"></span>
+            </div>
+            <input type="hidden" id="board-id" th:value="${board.id}"/>
+        </div>
+    </div>
+    <div class="white-div" th:if="${list.size() > 3}">
+
+    </div>
+    <div class="add-board">
+        <span class="add-board-text">+</span>
+    </div>
+    <div class="footer">
+        <div class="home-container">
+            <img src="/image/home.png" width="45px" height="45px" />
+            <br>
+            <span class="home-text">홈</span>
+        </div>
+        <div class="my-page-container">
+            <img class="my-page-img" src="/image/mypage.png" width="45px" height="45px" />
+            <br>
+            <span class="my-page-text">나의 당근</span>
+        </div>
+    </div>
+</body>
+</html>

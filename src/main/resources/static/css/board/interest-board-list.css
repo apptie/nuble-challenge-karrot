@@ -1,0 +1,76 @@
+.board-container {
+    width: 100%;
+    height: 180px;
+    border-bottom: 1px solid gray;
+    margin-top: 10px;
+}
+
+.img-container {
+    width: 150px;
+    height: 150px;
+    float: left;
+}
+
+.text-container {
+    width: 150px;
+    height: 70%;
+    float: left;
+    margin-left: 20px;
+}
+
+.board-text {
+    font-size: 18px;
+}
+
+.board-sub-text {
+    font-size: 12px;
+}
+
+.reply-img-container {
+    float: left;
+    margin-top: 40px;
+    margin-right: 5px;
+}
+
+.reply-text-container {
+    float: left;
+    margin-top: 37px;
+    margin-right: 15px;
+}
+
+.interest-img-container {
+    float: left;
+    margin-top: 40px;
+    margin-right: 5px;
+}
+
+.interest-text-container {
+    float: left;
+    margin-top: 37px;
+}
+
+.done-box {
+    background-color: black;
+    width: 65px;
+    height: 20px;
+    float: left;
+    margin-right: 10px;
+    color: gray;
+}
+
+.header {
+    width: 100%;
+    height: 70px;
+}
+
+.image-title {
+    float: left;
+}
+
+.page-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 21px;
+    margin-left: 15px;
+    float: left;
+}

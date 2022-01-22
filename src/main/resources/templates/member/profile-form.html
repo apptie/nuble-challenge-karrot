@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>프로필 수정</title>
+    <link th:href="@{/css/member/profile-form.css}" rel="stylesheet" />
+
+    <script th:inline="javascript">
+        let profileName = /*[[ ${memberForm?.profile} ]]*/;
+
+        function checkValue(value){
+            if( value == "" || value == null || value == undefined || ( value != null && typeof value == "object" && !Object.keys(value).length ) ) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        window.onload = function() {
+            document.querySelector('.camera-div').addEventListener('click', function() {
+                document.querySelector('.profile-file').click();
+            });
+
+            document.querySelector('.profile-file').addEventListener('change', function() {
+                let profile = document.querySelector('.profile-file');
+                let fileData = new FormData();
+
+                let filename = profile.files[0].name;
+                let idxDot = filename.lastIndexOf(".") + 1;
+                let extFile = filename.substr(idxDot, filename.length).toLowerCase();
+
+                if (!(extFile=="jpg" || extFile=="jpeg" || extFile=="png")) {
+                    profile.value = '';
+                    alert("이미지 파일만 올려주세요.");
+                    return ;
+                }
+
+                fileData.append("profile", profile.files[0]);
+
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', '/images/upload/profile', true);
+                xhr.onload = function(e) {
+                    if (xhr.status == 200) {
+                        let profile = xhr.responseText;
+                        document.querySelector('.profile-img').src = '/images/' + profile + '/profile';
+                        profileName = profile;
+                    }
+                    else {
+                        alert('error');
+                    }
+                }
+                xhr.send(fileData);
+            });
+
+            document.querySelector('.submit-div').addEventListener('click', function() {
+                let name = document.querySelector('.nickname').value;
+
+                let form = document.querySelector('.profile-form');
+                let input = document.createElement('input');
+
+                console.log(profileName);
+                if (!checkValue(profileName)) {
+                    console.log('if run');
+                    input.type = 'hidden';
+                    input.name = 'profile';
+                    input.value = profileName;
+                    form.appendChild(input);
+                }
+                form.submit();
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-text-container">
+            나의 당근
+        </div>
+    </div>
+    <br><br>
+    <div class="profile-container">
+        <div class="profile-div">
+            <img class="profile-img" th:src="|/images/${memberForm?.profile}/profile|" width="100%" height="100%" onerror="this.onerror=null; this.src='/image/no-profile.png';"/>
+        </div>
+        <div class="camera-div">
+            <img src="/image/camera.png" width="100%" height="100%"/>
+        </div>
+    </div>
+
+    <input type="file" class="profile-file" accept="image/png, image/jpeg, image/jpg">
+
+    <form th:object="${memberForm}" th:action method="post" class="profile-form">
+        <input type="text" th:field="*{nickname}" th:value="*{nickname}" class="nickname">
+        <div class="field-error" th:errors="*{nickname}">
+            닉네임 오류
+        </div>
+        <input type="hidden" th:field="*{email}" th:value="*{email}">
+    </form>
+
+    <div class="submit-div">
+        완료
+    </div>
+</body>
+</html>

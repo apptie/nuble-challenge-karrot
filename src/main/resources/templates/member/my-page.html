@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>나의 당근</title>
+    <link th:href="@{/css/member/my-page.css}" rel="stylesheet" />
+
+    <script type="text/javascript">
+        window.onload = function() {
+            document.querySelector('.profile-fix-div').addEventListener('click', function() {
+                location.href = '/members/profile';
+            });
+
+            document.querySelector(".home-container").addEventListener("click", function() {
+                location.href = "/";
+            });
+
+            document.querySelector(".my-page-container").addEventListener("click", function() {
+                location.href = "/members/";
+            });
+
+            document.querySelector('.sell-outer-container').addEventListener('click', function() {
+                location.href = '/members/boards';
+            });
+
+            document.querySelector('.interest-outer-container').addEventListener('click', function() {
+                location.href = '/boards/interest';
+            });
+
+            document.querySelector('.logout-div').addEventListener('click', function() {
+               location.href = '/logout';
+            });
+        };
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-text-container">
+            나의 당근
+        </div>
+    </div>
+    <div class="profile-container">
+        <div class="image-container">
+            <img th:src="|/images/${form.profile}/profile|" width="100%" height="100%" onerror="this.onerror=null; this.src='/image/no-profile.png';">
+        </div>
+        <div class="nickname-container">
+            <span class="nickname-text" th:text="${form.nickname}"></span>
+        </div>
+    </div>
+    <div class="profile-fix-div">
+        프로필 수정
+    </div>
+    <div class="sell-outer-container">
+        <div class="sell-img-div">
+            <img src="/image/sell.png" width="100%" height="100%">
+        </div>
+        <div class="sell-text-div">
+            판매내역
+        </div>
+    </div>
+    <div class="interest-outer-container">
+        <div class="interest-img-div">
+            <img src="/image/empty-heart.png" width="100%" height="100%">
+        </div>
+        <div class="interest-text-div">
+            관심목록
+        </div>
+    </div>
+    <div class="logout-div">
+        Log out
+    </div>
+    <div class="footer">
+        <div class="home-container">
+            <img src="/image/home.png" width="45px" height="45px" />
+            <br>
+            <span class="home-text">홈</span>
+        </div>
+        <div class="my-page-container">
+            <img class="my-page-img" src="/image/mypage.png" width="45px" height="45px" />
+            <br>
+            <span class="my-page-text">나의 당근</span>
+        </div>
+    </div>
+</body>
+</html>
