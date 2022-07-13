@@ -80,35 +80,47 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753381-d55770ba-636f-4ee5-91c1-b2c741fc9219.jpg">
 </div>
 
+<br>
 - 홈에서 회원 가입 버튼 선택
+<br>
 
 <div align="center">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753240-0b34c871-0925-4ed4-883b-a92386fe2075.jpg">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753254-1783626d-59bb-4d9d-a965-6709b8cf60c7.jpg">
 </div>
 
+<br>
 - 회원 가입을 위해 정보 입력
+<br>
 
 <div align="center">
-  <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753254-1783626d-59bb-4d9d-a965-6709b8cf60c7.jpg">
+  <img width="31%" src="https://user-images.githubusercontent.com/57691173/178764979-47733c66-44f9-408b-8290-7d244458c54b.png">
+  <br>
+  <img width="31%" src="https://user-images.githubusercontent.com/57691173/178764967-fee1d706-ab05-4998-aa20-72b4d4d7356e.png">
 </div>
 
+<br>
 - Validator를 통해 조건에 맞지 않은 정보가 들어올 시 에러 메세지 출력
+<br>
 
 <div align="center">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753256-ac2ba92e-ad22-477c-b55a-b9369dcb4af0.jpg">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753261-e8ec08c6-a765-4fc2-b555-9bee9a44d14b.jpg">
 </div>
 
+<br>
 - 대기하는 동안 회원 가입 메일 전송
 - 메일 전송 후 안내 메세지 출력
+<br>
 
 <div align="center">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753264-8bf1ac77-b529-4b46-b9d5-fcd25a61522f.jpg">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753268-77298b72-178f-4131-9623-dbe8863edc36.jpg">
 </div>
 
+<br>
 - 메일로 전송된 인증 url을 통해 메일 인증 후 회원 가입 완료
+<br>
 
 ### 로그인
 
@@ -117,9 +129,11 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753274-26aa58ed-066f-4b02-a2e0-e4ae6067a2ab.jpg">
 </div>
 
+<br>
 - 홈에서 로그인 버튼 클릭 시 이메일과 비밀번호를 입력할 수 있는 페이지로 이동
 - 로그인 이후 상품 리스트를 확인할 수 있는 페이지로 리다이렉트
   - 자신의 아이디가 출력되는 것을 통해 로그인 유무 확인 가능
+<br>
 
 ### 회원 정보 조회 및 수정
 
@@ -127,7 +141,9 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753278-69182ba6-da8f-453d-9322-6f2980fd95a8.jpg">
 </div>
 
+<br>
 - 하단의 나의 당근 버튼을 통해 회원의 정보 조회 가능
+<br>
 
 <div align="center">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753282-cef1b627-dd47-440f-8a46-e72a52955e49.jpg">
@@ -135,7 +151,9 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753286-14bcc3c8-77ae-4e00-94a1-b5dfd2f43b9c.jpg">
 </div>
 
+<br>
 - 프로필 수정을 통해 프로필 사진과 닉네임 변경 가능
+<br>
 
 <div align="center">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753289-8c562715-1132-4564-a235-f0cb1715f68b.jpg">
@@ -150,8 +168,10 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753338-ba8e4361-3513-44f4-882d-8fed10437de4.jpg">
 </div>
 
+<br>
 - 회원이 등록한 상품 확인 가능
   - 전체 / 판매중 / 거래완료(예약중, 거래완료) 필터링 가능
+<br>
 
 <hr>
 
@@ -163,7 +183,9 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753294-72e51843-ce79-43ef-8b0a-7df24748ac9c.jpg">
 </div>
 
+<br>
 - 하단의 주황색 플러스 버튼을 통해 상품 등록 가능
+<br>
 
 <div align="center">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753297-cefde3c5-5dc0-4a61-9366-556e36895c98.jpg">
@@ -171,19 +193,25 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753304-863707ba-26c0-420a-a7bf-9c99230fb41b.jpg">
 </div>
 
+<br>
 - 상품 등록 시 이미지 버튼을 통해 사진 등록 가능
+<br>
 
 <div align="center">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753309-53641b47-606e-4ac3-88f6-94b12484bd63.jpg">
 </div>
 
+<br>
 - 카테고리 선택 가능
+<br>
 
 <div align="center">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753311-d3d674d1-813c-4c59-8cc6-9988dc4e4425.jpg">
 </div>
 
+<br>
 - 우측 상단의 완료 버튼을 통해 등록 가능
+<br>
 
 ### 상품 조회
 
@@ -191,22 +219,28 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753329-581f7c32-ef47-4c42-b65e-10f4d3f30196.jpg">
 </div>
 
+<br>
 - 로그인 이후 자신이 등록한 상품을 제외한 상품 리스트 조회 가능
   - 각 상품에 대한 제목, 거래 위치(판매자 지역), 댓글, 좋아요, 상태(거래 완료) 확인 가능
+<br>
 
 <div align="center">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753313-daf0ac8b-976b-49c3-b357-9de9695ad917.jpg">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753315-4aaf5860-6591-48d1-8eeb-2ec0c4cabf0a.jpg">
 </div>
 
+<br>
 - 등록된 상품 상세보기에서 이미지 하단의 흰색 동그라미 클릭 시 등록한 사진 조회 가능
 - 제목, 가격, 본문 확인 가능 
+<br>
 
 <div align="center">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753330-3a1647f9-7c72-44a8-8aac-3c799cdc2614.jpg">
 </div>
 
+<br>
 - 상품을 등록한 판매자의 다른 상품 확인 가능
+<br>
 
 ### 상품 수정
 
@@ -215,13 +249,17 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753323-ecad70e1-0bf2-4785-8295-afec267b7bc6.jpg">
 </div>
 
+<br>
 - 우측 상단의 버튼을 클릭 시 게시글 수정 가능 
+<br>
 
 <div align="center">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753328-393c7ed1-e02d-4143-ad4f-baa523c7b586.jpg">
 </div>
 
+<br>
 - 상품의 상태(판매중 / 예약중 / 거래완료) 변경 가능
+<br>
 
 <div align="center">
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753355-70f48b10-81a4-4b4e-bf13-d04f56e9072e.jpg">
@@ -229,7 +267,9 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753361-36113f87-8bb6-4cfe-8706-23aeeac82311.jpg">
 </div>
 
+<br>
 - 판매 내역에서도 상품의 상태 변경 가능
+<br>
 
 ### 좋아요 등록
 
@@ -238,9 +278,11 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753353-c29412e0-e696-412f-a7b1-bcf026f580af.jpg">
 </div>
 
+<br>
 - 상품에서 하트 버튼을 통해 좋아요 추가 가능
   - 좋아요 했다면 빨간 하트, 좋아요 하지 않았다면 빈 하트로 표시
   - 좋아요 한 상품은 관심목록에서 확인 가능
+<br>
 
 ### 좋아요 삭제
 
@@ -249,8 +291,10 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753378-21e3963b-d3d0-4d63-9f30-adbec9c62283.jpg">
 </div>
 
+<br>
 - 상품에서 하트 버튼을 통해 좋아요 삭제 가능
   - 좋아요 삭제한 상품은 관심목록에서 제외
+<br>
 
 ## 댓글
 
@@ -261,7 +305,9 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753343-3e587fad-cece-457f-89b8-63675df1f089.jpg">
 </div>
 
+<br>
 - 하단의 댓글 쓰기를 통해 댓글 작성 가능
+<br>
 
 ### 댓글 조회
 
@@ -270,7 +316,9 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753346-78a6abe4-6181-4385-8f95-c5fbf9db7fcd.jpg">
 </div>
 
+<br>
 - 하단의 댓글 보기를 통해 댓글 조회 가능
+<br>
 
 ### 댓글 수정
 
@@ -279,4 +327,5 @@
   <img width="31%" src="https://user-images.githubusercontent.com/57691173/178753350-6b82bd70-ecda-4fbc-ac93-040953707fe7.jpg">
 </div>
 
+<br>
 - 댓글의 우측 하단의 edit 버튼을 통해 댓글 수정 가능
